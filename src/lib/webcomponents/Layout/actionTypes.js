@@ -1,0 +1,10 @@
+export const ADD = 'Layout/ADD';
+export const DELETE = 'Layout/DELETE';
+export const INSERTBEFORE  = 'Layout/INSERTBEFORE';
+export const INSERTAFTER = 'Layout/INSERAFTER';
+export const MOVE = 'Layout/MOVE';
+export const SETCURSOR = 'Layout/SETCURSOR';
+export const UPDATESTYLES = 'Layout/UPDATESTYLES';
+export const ADDCOMPONENT = 'Layout/ADDCOMPONENT';
+export const REMOVECOMPONENT = 'Layout/REMOVECOMPONENT';
+export const SETCOMPONENT = 'Layout/SETCOMPONENT';

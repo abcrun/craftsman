@@ -1,0 +1,6 @@
+:local(.settings){
+    position:fixed;left:0;top:0;width:36px;height:100%;z-index:2;overflow:hidden;
+    .content_settings{float:left;width:300px;height:100%;background:#BDD4DE}
+    .icons_tip{display:none;width:200px;position:absolute;left:36px;}
+    .hidden{display:none;}
+}

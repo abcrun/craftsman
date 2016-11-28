@@ -1,0 +1,7 @@
+:local(.pannel){
+    width:36px;height:100%;float:left;background:#2B3A42;font-size:12px;padding-top:10px;box-sizing:border-box;
+    .inspect, .layout{text-align:center;cursor:pointer;height:36px;line-height:36px;font-size:20px;color:#fff;}
+    .cursor{color:#3498DB;}
+    .current{background:#ff530d}
+}
+
