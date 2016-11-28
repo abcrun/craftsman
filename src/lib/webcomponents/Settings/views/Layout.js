@@ -26,13 +26,42 @@ export default class Layout extends Component {
         }
     }
 
+    updateStyles(index, actions) {
+        let margin = this.refs.margin_top.value + ' ' + this.refs.margin_right.value + ' ' + this.refs.margin_bottom.value + ' ' + this.refs.margin_left.value;
+        let padding = this.refs.padding_top.value + ' ' + this.refs.padding_right.value + ' ' + this.refs.padding_bottom.value + ' ' + this.refs.padding_left.value;
+        let width = this.refs.width.value, height = this.refs.height.value;
+
+        let styles = { width, height, padding, margin };
+        actions.updateStyles({ index, styles})
+    }
+
+    select(event) {
+        let elm = event.target;
+        elm.select();
+    }
+
     render() {
-        let { root, cursor, actions } = this.props;
-        var svg_html = svg.render(cursor);
+        let { root, cursor, actions } = this.props,
+            node = IBTree.select(cursor), 
+            styles = node.data.styles;
+        let svg_html = svg.render(cursor);
+
+        let width = styles.width || '100%', height = styles.height || '100px',
+            margins = (styles.margin || '- - - -').split(' '),
+            paddings = (styles.padding || '- - - -').split(' ');
+
+        let margin_top = margins[0],
+            margin_right = margins[1],
+            margin_bottom = margins[2],
+            margin_left = margins[3];
+        let padding_top = paddings[0],
+            padding_right = paddings[1],
+            padding_bottom = paddings[2],
+            padding_left = paddings[3];
 
         return (
             <div className={ s.layout }>
-                <div className="title">设置布局</div>
+                <div className="title">布局</div>
                 <div className="intro">
                     <p className="desc">操作说明</p>
                     <p><span>+</span>:新增布局</p>
@@ -42,6 +71,44 @@ export default class Layout extends Component {
                     <p className="move">拖拽节点更改位置</p>
                 </div>
                 <div className="layout_settings">
+                    <div className="box">
+                        <div className="margin">
+                            <div className="hoz hoztop">
+                                <input type="text" ref="margin_top" value={ margin_top } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                            </div>
+                            <div className="hoz hozbottom">
+                                <input type="text" ref="margin_bottom" value={ margin_bottom } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                            </div>
+                            <div className="ver verleft">
+                                <input type="text" ref="margin_left" value={ margin_left } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                            </div>
+                            <div className="ver verright">
+                                <input type="text" ref="margin_right" value={ margin_right } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                            </div>
+
+                            <div className="padding">
+                                <div className="hoz hoztop">
+                                    <input type="text" ref="padding_top" value={ padding_top } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                                </div>
+                                <div className="hoz hozbottom">
+                                    <input type="text" ref="padding_bottom" value={ padding_bottom } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) }  />
+                                </div>
+                                <div className="ver verleft">
+                                    <input type="text" ref="padding_left" value={ padding_left } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                                </div>
+                                <div className="ver verright">
+                                    <input type="text" ref="padding_right" value={ padding_right } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) }  />
+                                </div>
+
+                                <input type="text" className="width" ref="width" value={ width } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                                &times; 
+                               <input type="text" className="height" ref="height" value={ height } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="advanced">
+                        <div className="more">更多设置</div>
+                    </div>
                 </div>
                 <div className="svg">
                     <svg ref="svg"
