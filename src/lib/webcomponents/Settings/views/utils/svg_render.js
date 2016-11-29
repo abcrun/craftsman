@@ -1,4 +1,4 @@
-import { IBTree } from '../../../../utils/IBTree';
+import { NodeTree } from '../../../../utils/NodeTree';
 
 var svg = (function(){
     var nodeRadius = 15, nodeLinkLine = 15, nodeWidth = nodeLinkLine + 2*nodeRadius, nodeHeight = 2*nodeRadius,
@@ -7,7 +7,7 @@ var svg = (function(){
     var that = this;
     var last;
 
-    var walkdown = function(node){
+    var traverse = function(node){
         if(!node) return ;
 
         var level = node.level, x, y;
@@ -33,7 +33,7 @@ var svg = (function(){
         node.layout = { x: level * (3*nodeRadius + parentSpace), y: y }
 
 
-        if(node.firstChild) walkdown(node.firstChild);
+        if(node.firstChild) traverse(node.firstChild);
         if(node.next){
             var next = node.next, parentSiblings = node.parent.next;
             if(next || parentSiblings){//父节点遍历下移调整位置
@@ -48,15 +48,15 @@ var svg = (function(){
                     parentNode = parentNode.parent;
                 }
 
-                next ? walkdown(next) : walkdown(parentSiblings);
+                next ? traverse(next) : traverse(parentSiblings);
             }
         }
     }
 
     var render = function(cursor){
-        var nodes = IBTree.IndexDB(), str = [];
+        var nodes = NodeTree.IndexDB(), str = [];
 
-        walkdown(nodes[0]);
+        traverse(nodes[0]);
 
         for(let key in nodes){
             if(key != 'cursor'){
@@ -164,7 +164,7 @@ var svg = (function(){
                 var node = target.parentNode;
                 var to = node.getAttribute('data-index');
                 var isChildren = function(){
-                    var toNode = IBTree.select(to);
+                    var toNode = NodeTree.select(to);
                     while(toNode){
                         var index = toNode.index;
                         if(index == from) return true;

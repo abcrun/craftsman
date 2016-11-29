@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import s from './Layout.css';
 
-import { IBTree } from '../../../utils/IBTree';
+import { NodeTree } from '../../../utils/NodeTree';
 import { svg } from './utils/svg_render';
 
 export default class Layout extends Component {
@@ -37,17 +37,23 @@ export default class Layout extends Component {
 
     select(event) {
         let elm = event.target;
+        elm.style.cssText = 'border:solid 1px #bdd4de';
         elm.select();
+    }
+
+    blur(event) {
+        let elm = event.target;
+        elm.style.cssText = '';
     }
 
     render() {
         let { root, cursor, actions } = this.props,
-            node = IBTree.select(cursor), 
+            node = NodeTree.select(cursor), 
             styles = node.data.styles;
         let svg_html = svg.render(cursor);
 
         let width = styles.width || '100%', height = styles.height || '100px',
-            margins = (styles.margin || '- - - -').split(' '),
+            margins = (styles.margin || '0 auto 0 auto').split(' '),
             paddings = (styles.padding || '- - - -').split(' ');
 
         let margin_top = margins[0],
@@ -74,40 +80,30 @@ export default class Layout extends Component {
                     <div className="box">
                         <div className="margin">
                             <div className="hoz hoztop">
-                                <input type="text" ref="margin_top" value={ margin_top } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                                <input type="text" ref="margin_top" value={ margin_top } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } onBlur={ e => this.blur(e) } />
                             </div>
                             <div className="hoz hozbottom">
-                                <input type="text" ref="margin_bottom" value={ margin_bottom } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                                <input type="text" ref="margin_bottom" value={ margin_bottom } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } onBlur={ e => this.blur(e) }  />
                             </div>
                             <div className="ver verleft">
-                                <input type="text" ref="margin_left" value={ margin_left } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                                <input type="text" ref="margin_left" value={ margin_left } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } onBlur={ e => this.blur(e) }  />
                             </div>
                             <div className="ver verright">
-                                <input type="text" ref="margin_right" value={ margin_right } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                                <input type="text" ref="margin_right" value={ margin_right } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } onBlur={ e => this.blur(e) }  />
                             </div>
 
                             <div className="padding">
-                                <div className="hoz hoztop">
-                                    <input type="text" ref="padding_top" value={ padding_top } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
-                                </div>
-                                <div className="hoz hozbottom">
-                                    <input type="text" ref="padding_bottom" value={ padding_bottom } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) }  />
-                                </div>
-                                <div className="ver verleft">
-                                    <input type="text" ref="padding_left" value={ padding_left } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
-                                </div>
-                                <div className="ver verright">
-                                    <input type="text" ref="padding_right" value={ padding_right } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) }  />
-                                </div>
-
-                                <input type="text" className="width" ref="width" value={ width } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                                <input type="text" className="width" ref="width" value={ width } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } onBlur={ e => this.blur(e) }  />
                                 &times; 
-                               <input type="text" className="height" ref="height" value={ height } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } />
+                               <input type="text" className="height" ref="height" value={ height } onChange={ this.updateStyles.bind(this, cursor, actions) } onFocus={ e => this.select(e) } onBlur={ e => this.blur(e) }  />
                             </div>
                         </div>
                     </div>
                     <div className="advanced">
-                        <div className="more">更多设置</div>
+                        <div className="content">
+                            <div className="item">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="svg">
@@ -162,7 +158,7 @@ export default class Layout extends Component {
     componentDidMount(){
         var tree = this.refs.tree, actions = this.refs.actions;
         var ts = /(-?\d+)\,(-?\d+)/.exec(tree.getAttribute('transform') || 'translate(0,0)')
-        var cursor = this.props.cursor, node = IBTree.select(cursor),
+        var cursor = this.props.cursor, node = NodeTree.select(cursor),
             x = parseInt(ts[1]) + node.layout.x + 45, y = parseInt(ts[2]) + node.layout.y - 52;
 
         actions.setAttribute('transform', 'translate(' + x + ',' + y + ')')
@@ -172,7 +168,7 @@ export default class Layout extends Component {
     componentDidUpdate(prev){
         var tree = this.refs.tree, actions = this.refs.actions;
         var ts = /(-?\d+)\,(-?\d+)/.exec(tree.getAttribute('transform') || 'translate(0,0)')
-        var cursor = this.props.cursor, node = IBTree.select(cursor),
+        var cursor = this.props.cursor, node = NodeTree.select(cursor),
             x = parseInt(ts[1]) + node.layout.x + 45, y = parseInt(ts[2]) + node.layout.y - 52;
 
         actions.setAttribute('transform', 'translate(' + x + ',' + y + ')')

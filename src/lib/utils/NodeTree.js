@@ -1,4 +1,4 @@
-var IBTree = (function(){
+var NodeTree = (function(){
     var IndexDB = {}, counter = 0, root, Node = function(index, data){
         this.index = index;
         this.data = data;
@@ -191,4 +191,4 @@ var IBTree = (function(){
     }
 })();
 
-export { IBTree };
+export { NodeTree };

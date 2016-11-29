@@ -1,5 +1,5 @@
 :local(.layout){
-    position:relative;height:100px;
+    position:relative;height:100px;margin:0 auto;
     .hover{display:none;position:absolute;width:100%;height:100%;top:0;left:0;background:#ff530d;opacity:.2}
     .show{display:block;}
 }
