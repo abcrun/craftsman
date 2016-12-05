@@ -21,7 +21,7 @@ let initialState = NodeTree.IndexDB();
 export default handleActions({
     [T.ADD]: (state, action) => { 
         let { index } = action.payload, node = NodeTree.select(index);
-        node.add(initData);
+        node.add({ styles: {}, components:[] });
         return Object.assign({}, NodeTree.IndexDB());
     },
 
@@ -34,14 +34,14 @@ export default handleActions({
 
     [T.INSERTBEFORE]: (state, action) => { 
         let { index } = action.payload, node = NodeTree.select(index);
-        node.insertBefore(initData);
+        node.insertBefore({ styles: {}, components: [] });
 
         return Object.assign({}, NodeTree.IndexDB());
     },
 
     [T.INSERTAFTER]: (state, action) => { 
         let { index } = action.payload, node = NodeTree.select(index);
-        node.insertAfter(initData);
+        node.insertAfter({ styles: [], components: [] });
 
         return Object.assign({}, NodeTree.IndexDB());
     },

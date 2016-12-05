@@ -82,7 +82,7 @@ var svg = (function(){
                 }else{
                     str.push('<use xlink:href="#unit" x="' + x + '" y="' + y + '" class="' + cls + '" />')
                 }
-                str.push('<text x="' + (x + nodeRadius + nodeLinkLine) + '" y="' + (y + nodeRadius + fontSize/2) + '" font-size="' + fontSize + '" fill="#fff" text-anchor="middle">' + index + '</text>')
+                str.push('<text x="' + (x + nodeRadius + nodeLinkLine) + '" y="' + (y + nodeRadius + fontSize/2) + '" font-size="' + fontSize + '" fill="#fff" text-anchor="middle">L' + index + '</text>')
 
                 str.push('</g>')
 

@@ -32,13 +32,13 @@ export default class Pannel extends Component {
     render() {
         return (
             <div className={ s.pannel }>
-                <div ref="inspect" title="点击在页面选择需要修改的布局"
-                    onClick={ this.inspect.bind(this) } className="inspect">
+                <div ref="inspect" className="inspect" onClick={ this.inspect.bind(this) } >
                     <FontAwesome name="location-arrow" className="arrow" />
+                    <div className="tip">点击在页面选择需要修改的布局</div>
                 </div>
-                <div ref="layout" title="设置布局" className="layout" 
-                    onClick={ this.configLayout.bind(this) } >
-                        <FontAwesome name="cogs" />
+                <div ref="layout" className="layout" onClick={ this.configLayout.bind(this) } >
+                    <FontAwesome name="cogs" />
+                    <div className="tip">设置布局(添加/删除/移动/修改样式)</div>
                 </div>
             </div>
         )

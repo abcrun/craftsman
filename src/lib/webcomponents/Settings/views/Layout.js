@@ -28,10 +28,12 @@ export default class Layout extends Component {
 
     updateStyles(index, actions) {
         let margin = this.refs.margin_top.value + ' ' + this.refs.margin_right.value + ' ' + this.refs.margin_bottom.value + ' ' + this.refs.margin_left.value;
-        let padding = this.refs.padding_top.value + ' ' + this.refs.padding_right.value + ' ' + this.refs.padding_bottom.value + ' ' + this.refs.padding_left.value;
         let width = this.refs.width.value, height = this.refs.height.value;
+        var styles  = {};
+        if(width != '100%') styles.width = width;
+        if(height != 'auto') styles.height = height;
+        if(margin != '0 auto 0 auto') styles.margin = margin;
 
-        let styles = { width, height, padding, margin };
         actions.updateStyles({ index, styles})
     }
 
@@ -52,22 +54,17 @@ export default class Layout extends Component {
             styles = node.data.styles;
         let svg_html = svg.render(cursor);
 
-        let width = styles.width || '100%', height = styles.height || '100px',
-            margins = (styles.margin || '0 auto 0 auto').split(' '),
-            paddings = (styles.padding || '- - - -').split(' ');
+        let width = styles.width || '100%', height = styles.height || 'auto',
+            margins = (styles.margin || '0 auto 0 auto').split(' ');
 
         let margin_top = margins[0],
             margin_right = margins[1],
             margin_bottom = margins[2],
             margin_left = margins[3];
-        let padding_top = paddings[0],
-            padding_right = paddings[1],
-            padding_bottom = paddings[2],
-            padding_left = paddings[3];
 
         return (
             <div className={ s.layout }>
-                <div className="title">布局</div>
+                <div className="title">设置布局</div>
                 <div className="intro">
                     <p className="desc">操作说明</p>
                     <p><span>+</span>:新增布局</p>

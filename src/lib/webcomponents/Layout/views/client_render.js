@@ -13,11 +13,17 @@ export default class Layout extends Component {
     }
 
     inspect(e) {
-        let inspect = document.querySelector('.inspect');
+        let inspect = document.querySelector('.inspect'),
+            layout = document.querySelector('.layout'),
+            settings = document.querySelector('.content_settings');
         e.stopPropagation();
 
         this.refs.hover.className = 'hover';
         inspect.className = 'inspect';
+
+        layout.parentNode.parentNode.style.cssText = 'width:336px;';
+        layout.className = 'layout current';
+        settings.className = 'content_settings';
     }
 
     render() {
